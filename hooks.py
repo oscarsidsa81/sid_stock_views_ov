@@ -77,8 +77,10 @@ def post_init_create_sid_stock_views_ov(cr, registry):
     View = env["ir.ui.view"].sudo()
 
     # cargar definiciones
+    # __file__ apunta al propio hooks.py dentro del addon.
+    # NO subir dos niveles (eso nos saca a /home/odoo/src/user) y rompe el path.
     import os
-    module_path = os.path.dirname(os.path.dirname(__file__))
+    module_path = os.path.dirname(__file__)
     defs_path = os.path.join(module_path, "data", "ov_views.json")
     with open(defs_path, "r", encoding="utf-8") as f:
         defs = json.load(f)
