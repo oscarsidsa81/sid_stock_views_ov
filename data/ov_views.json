@@ -1,0 +1,242 @@
+[
+  {
+    "name": "OV - Anterior y Posterior",
+    "model": "stock.picking",
+    "type": "form",
+    "priority": 16,
+    "inherit_name": "stock.picking.form",
+    "arch_db": "<data>\n  <xpath expr=\"//button[@name='action_set_quantities_to_reservation']\" position=\"before\">\n      <button class=\"oe_highlight\" name=\"1198\" type=\"action\" string=\"COLADAS OK\" attrs=\"{'invisible': ['|', '|', ('state', 'in', ('done', 'cancel')), ('picking_type_code', '!=', 'incoming'), '&amp;', ('certificate_needed', '=', False), ('certificate_needed_in', '=', False)]}\"/>\n  </xpath>\n  <xpath expr=\"//button[@name='action_set_quantities_to_reservation']\" position=\"before\">\n      <button class=\"oe_highlight\" name=\"1198\" type=\"action\" string=\"COLADAS OK\" attrs=\"{'invisible': ['|', '|', ('state', 'in', ('done', 'cancel')), ('picking_type_id', '!=', 50), '&amp;', ('certificate_needed', '=', False), ('certificate_needed_in', '=', False)]}\"/>\n  </xpath>\n  <xpath expr=\"//form/sheet\" position=\"before\">\n    <br/>\n      <span>\n        <button class=\"btn-info\" icon=\"fa-reply\" name=\"__export__.ir_act_server_1272_b233eb3c\" type=\"action\" string=\" Anteriores\"/>\n      </span>\n      <span style=\"float: right;\">\n        <button class=\"btn-info\" icon=\"fa-share\" name=\"__export__.ir_act_server_1271_4c35f738\" type=\"action\" string=\" Posteriores\"/>\n      </span>\n  </xpath>  \n</data>"
+  },
+  {
+    "name": "OV - Dirección de entrega",
+    "model": "stock.picking",
+    "type": "form",
+    "priority": 16,
+    "inherit_name": "stock.picking.form",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='is_return_picking']\" position=\"before\">\n    <field name=\"x_direccion\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - PASILLO",
+    "model": "stock.quant",
+    "type": "search",
+    "priority": 16,
+    "inherit_name": "stock.quant.search",
+    "arch_db": "<data>\n    <search>\n    <searchpanel>\n      <field name=\"x_pasillo\" enable_counters=\"1\" select=\"multi\"/>\t\n      <field name=\"user_id\" enable_counters=\"1\" select=\"multi\"/>\t\n    </searchpanel>\n  </search>\n</data>"
+  },
+  {
+    "name": "OV - Picking Tree Ptllo",
+    "model": "stock.picking",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.entregas.ptllo.picking.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree[1]/field[@name='location_dest_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='location_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='priority']\" position=\"after\">\n    <field name=\"x_qty_done\" optional=\"show\" widget=\"percentpie\" string=\" \" width=\"40px\" class=\"text-center\"/>\n    <field name=\"x_esquema\" optional=\"show\" class=\"text-center\"/>\n    <button class=\"oe_inline\" icon=\"fa-reply\" name=\"__export__.ir_act_server_1272_b233eb3c\" type=\"action\" help=\"Albaranes origen\"/>\n    <button class=\"oe_inline\" icon=\"fa-share\" name=\"__export__.ir_act_server_1271_4c35f738\" type=\"action\" help=\"Albaranes destino\"/>\n    <field name=\"x_asignado\" optional=\"show\" domain=\"[('department_id.id','=',3)]\" widget=\"many2one_avatar\" class=\"text-center\"/>    \n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"attributes\">\n    <attribute name=\"invisible\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"attributes\">\n    <attribute name=\"string\">Dirección</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"after\">\n    <field name=\"carrier_id\" optional=\"show\" string=\"Transportista\"/>\n    <field name=\"weight\" optional=\"show\" class=\"text-center\"/>\n    <field name=\"shipping_weight\" optional=\"show\" class=\"text-center\"/>\t\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"expand\">1</attribute>\n    <attribute name=\"default_order\">scheduled_date asc,state asc,name asc</attribute>    \n    <attribute name=\"delete\">false</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='name']\" position=\"before\">\n    <field name=\"group_id\" decoration-bf=\"1\" optional=\"show\" string=\"Pedido\" class=\"text-center\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='group_id']\" position=\"attributes\">\n    <attribute name=\"decoration-bf\">1</attribute>    \n    <attribute name=\"class\">text-center</attribute>    \n  </xpath>  \n  <xpath expr=\"//field[@name='x_esquema']\" position=\"after\">\n    <field name=\"x_enviar\" width=\"5px\" optional=\"show\" string=\"Env.\" class=\"text-center\" widget=\"boolean_toggle\"/>\n    <field name=\"x_completado\" width=\"5px\" optional=\"show\" string=\"Comp.\" class=\"text-center\" widget=\"boolean_toggle\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Puertollano",
+    "model": "stock.production.lot",
+    "type": "form",
+    "priority": 16,
+    "inherit_name": "stock.production.lot.form",
+    "arch_db": "<data>\n  <xpath expr=\"//button[@name='action_view_so']\" position=\"attributes\">\n      <attribute name=\"invisible\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='sale_order_count']\" position=\"attributes\">\n     <!-- <attribute name=\"groups\">\"sales_team.group_sale_salesman_all_leads,stock.group_stock_user,!__export__.res_groups_111_1269f224\"</attribute> -->\n     <attribute name=\"invisible\">1</attribute>\n  </xpath>\n\n <xpath expr=\"//page[@name='certificates_related']/field[@name='certificate_ids']/tree/field[@name='certificate_id']\" position=\"after\">\n        <button name=\"__export__.ir_act_server_1593_fea9e893\" type=\"action\" string=\"\" icon=\"fa-book\" class=\"oe_inline\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Reservada modificable",
+    "model": "stock.move.line",
+    "type": "form",
+    "priority": 16,
+    "inherit_name": "stock.move.line.form",
+    "arch_db": "<data>\n  <xpath expr=\"//form[1]\" position=\"attributes\">\n    <attribute name=\"edit\">true</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='product_uom_qty']\" position=\"attributes\">\n    <attribute name=\"readonly\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.move",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.picking.move.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='product_id']\" position=\"before\">\n    <button name=\"action_show_details\" type=\"object\" icon=\"fa-list fa-lg\" attrs=\"{'invisible': [('state', '=', 'done')]}\"/>\n  </xpath>\n  <xpath expr=\"//button[@name='action_show_details']\" position=\"after\">\n    <field name=\"todo\" optional=\"show\" widget=\"boolean_toggle\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"after\">\n    <field name=\"po_comments\" optional=\"hide\"/>\n    <field name=\"item\" optional=\"show\"/>\n    <field name=\"x_pasillo\" optional=\"show\"/>    \n    <field name=\"description_picking\" optional=\"show\"/>\n    <field name=\"x_tags_activities\" widget=\"many2many_tags\" readonly=\"1\" string=\"Actividades\" options=\"{'color_field': 'x_color'}\"/>\n    <field name=\"x_familia\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='x_tags_activities']\" position=\"before\">\n    <field name=\"comments\" decoration-warning=\"comments\" class=\"font-weight-bold\" widget=\"text\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"decoration-success\"/>\n    <attribute name=\"decoration-danger\"/>\n    <attribute name=\"decoration-bf\">1</attribute>\n    <attribute name=\"decoration-danger\">po_comments == 'Cancelado****' or comments == 'Cancelado sólo en la venta****' or comments == 'Cancelado**** Cancelado sólo en la venta****' or product_uom_qty &lt;=0</attribute>\n    <attribute name=\"decoration-success\">state != 'done' and product_uom_qty &gt; 0 and (quantity_done == product_uom_qty or quantity_done &gt; product_uom_qty)</attribute>\n    <attribute name=\"decoration-muted\">(po_comments != 'Cancelado****' or comments != 'Cancelado sólo en la venta****' or comments != 'Cancelado**** Cancelado sólo en la venta****') and state != 'done' and product_uom_qty &gt; 0 and quantity_done &lt; product_uom_qty</attribute>\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"decoration-it\">state == 'done'</attribute>\n    <attribute name=\"decoration-danger\">po_comments == 'Cancelado****' or comments == 'Cancelado sólo en la venta****' or comments == 'Cancelado**** Cancelado sólo en la venta****' or product_uom_qty &lt;=0</attribute>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.production.lot",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.production.lot.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree[1]/field[@name='name']\" position=\"after\">\n    <field name=\"product_qty\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"edit\">true</attribute>    \n    <attribute name=\"create\">false</attribute> \n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.move",
+    "type": "form",
+    "priority": 16,
+    "inherit_name": "stock.move.operations.form",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='product_id']\" position=\"before\">\n    <field name=\"item\" string=\"Item\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"after\">\n    <field name=\"description_picking\" string=\"Descripción\" readonly=\"1\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.warehouse.orderpoint",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.warehouse.orderpoint.tree.editable.config",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='product_id']\" position=\"after\">\n    <field optional=\"show\" name=\"x_familia\" string=\"Familia\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS Transferencias",
+    "model": "stock.picking",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.picking.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='scheduled_date']\" position=\"after\">\n    <field name=\"group_id\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='name']\" position=\"after\">\n    <field name=\"x_qty_done\" optional=\"show\" widget=\"percentpie\" string=\" \" attrs=\"{'invisible': [('state', 'in', ('draft','done','cancel'))]}\"/>\n    <field name=\"x_esquema\" optional=\"show\"/>\n    <button class=\"oe_inline\" icon=\"fa-reply\" name=\"__export__.ir_act_server_1272_b233eb3c\" type=\"action\" help=\"Albaranes origen\"/>\n    <button class=\"oe_inline\" icon=\"fa-share\" name=\"__export__.ir_act_server_1271_4c35f738\" type=\"action\" help=\"Albaranes destino\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"default_order\">id asc</attribute>    \n  </xpath>\n  <xpath expr=\"//field[@name='group_id']\" position=\"after\">\n    <field name=\"picking_id_stock_move_line_count\" string=\"Nº de líneas\" class=\"text-center\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"attributes\">\n    <attribute name=\"string\">Dirección de Entrega</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='name']\" position=\"attributes\">\n    <attribute name=\"readonly\">0</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Varios Picking",
+    "model": "stock.picking",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.picking.picking.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree[1]/field[@name='location_dest_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='location_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='priority']\" position=\"after\">\n    <field name=\"x_qty_done\" optional=\"show\" widget=\"percentpie\" string=\" \" class=\"text-center\"/>\n    <field name=\"x_esquema\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"attributes\">\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"expand\">1</attribute>\n    <attribute name=\"default_order\">scheduled_date asc, state asc, priority desc,group_id asc,name asc</attribute>    \n    <attribute name=\"delete\">false</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='scheduled_date']\" position=\"after\">\n    <field name=\"group_id\" string=\"Pedido\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='x_esquema']\" position=\"after\">\n    <field name=\"x_asignado\" optional=\"show\"/>\n    <field name=\"x_completado\" width=\"5px\" optional=\"show\" string=\"Comp.\" class=\"text-center\" widget=\"boolean_toggle\"/>\n    <button class=\"oe_inline\" icon=\"fa-reply\" name=\"__export__.ir_act_server_1272_b233eb3c\" type=\"action\" help=\"Albaranes origen\"/>\n    <button class=\"oe_inline\" icon=\"fa-share\" name=\"__export__.ir_act_server_1271_4c35f738\" type=\"action\" help=\"Albaranes destino\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='group_id']\" position=\"after\">\n    <field name=\"picking_id_stock_move_line_count\" string=\"Nº de líneas\" class=\"text-center\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"after\">\n    <field name=\"carrier_id\" optional=\"show\" string=\"Transportista\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='scheduled_date']\" position=\"after\">\n    <field name=\"activity_ids\" widget=\"list_activity\"/>\n    <field name=\"activity_user_id\" optional=\"show\" string=\"Usuario\" widget=\"many2one_avatar\"/>\n    <field name=\"my_activity_date_deadline\" string=\"Deadline\" widget=\"remaining_days\" options=\"{'allow_order': '1'}\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Vista certificados",
+    "model": "stock.picking",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.certificates.picking.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree[1]/field[@name='location_dest_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='location_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='priority']\" position=\"after\">\n    <field name=\"x_qty_done\" optional=\"show\" widget=\"percentpie\" string=\" \" class=\"text-center\"/>\n    <field name=\"x_esquema\" optional=\"show\"/>\n    <button class=\"oe_inline\" icon=\"fa-reply\" name=\"__export__.ir_act_server_1272_b233eb3c\" type=\"action\" help=\"Albaranes origen\"/>\n    <button class=\"oe_inline\" icon=\"fa-share\" name=\"__export__.ir_act_server_1271_4c35f738\" type=\"action\" help=\"Albaranes destino\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"attributes\">\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"expand\">1</attribute>\n    <attribute name=\"default_order\">state asc, scheduled_date asc, priority desc,name asc</attribute>    \n    <attribute name=\"delete\">false</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='scheduled_date']\" position=\"after\">\n    <field name=\"group_id\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='group_id']\" position=\"after\">\n    <field name=\"picking_id_stock_move_line_count\" string=\"Nº de líneas\" class=\"text-center\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV- Varios",
+    "model": "stock.move.line",
+    "type": "search",
+    "priority": 16,
+    "inherit_name": "stock.move.line.search",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='picking_id']\" position=\"after\">\n    <field name=\"x_item\"/>\n    <field name=\"product_id\" string=\"Producto1\"/>\n    <field name=\"product_id\" string=\"Producto2\"/>\n    <field name=\"product_id\" string=\"Producto3\"/>\n    <field name=\"x_studio_familia\"/>\n    <field name=\"x_desc_picking\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV-Varios",
+    "model": "stock.location.route",
+    "type": "tree",
+    "priority": 16,
+    "inherit_name": "stock.location.route.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='name']\" position=\"before\">\n    <field name=\"id\" optional=\"show\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Reservada",
+    "model": "stock.quant",
+    "type": "tree",
+    "priority": 50,
+    "inherit_name": "stock.quant.tree.editable",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='product_uom_id']\" position=\"after\">\n      <field name=\"reserved_quantity\" readonly=\"0\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"before\">\n      <field name=\"x_pasillo\" optional=\"show\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Adicionales",
+    "model": "stock.move.line",
+    "type": "tree",
+    "priority": 160,
+    "inherit_name": "certificate.stock.move.line.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"multi_edit\">1</attribute>\n  </xpath>\n   <xpath expr=\"//field[@name='product_id']\" position=\"before\">\n                    <field name=\"x_studio_compra\" optional=\"show\" readonly=\"1\"/>\n                    <field name=\"x_item\" optional=\"show\" readonly=\"1\"/>\n                    <field name=\"x_desc_picking\" optional=\"show\" readonly=\"1\" widget=\"text\"/>\n                    <field name=\"x_studio_related_field_WRoVn\" optional=\"show\" readonly=\"1\"/>\n    </xpath>\n    <xpath expr=\"//field[@name='certificate_ids']\" position=\"after\">\n        <button name=\"1418\" type=\"action\" help=\"Abrir certificados\" icon=\"fa-list\" class=\"o_inline\" attrs=\"{'invisible': [('certificate_id', '=', [])]}\"/>\n    </xpath>\n  <tree>\n    <header>\n       <button name=\"1398\" type=\"action\" string=\"Cert. Único\" invisible=\"context.get('is_outgoing', False)\"/>\n       <button name=\"1399\" type=\"action\" string=\"Cert. Multi\" invisible=\"context.get('is_outgoing', False)\"/>\n    </header>\n  </tree>\n  <xpath expr=\"//field[@name='certificate_id']\" position=\"attributes\">\n    <attribute name=\"modifiers\">{}</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='qty_done']\" position=\"after\">\n    <field optional=\"hide\" name=\"location_dest_id\"/>\n    <field optional=\"hide\" name=\"location_id\"/>\n    <field optional=\"hide\" name=\"package_id\" string=\"Paquete PL\"/>\n    <field optional=\"show\" name=\"result_package_id\" string=\"Paquete PL Destino\"/>\n    <field optional=\"show\" name=\"x_studio_familia\" string=\"Familia\"/>\n    <field optional=\"hide\" name=\"product_uom_qty\" string=\"Reservado\"/>\n    <field optional=\"hide\" name=\"product_qty\" string=\"Cantidad real reservada\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Permisos",
+    "model": "stock.quant",
+    "type": "tree",
+    "priority": 160,
+    "inherit_name": "stock.quant.inventory.tree.editable",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='inventory_quantity']\" position=\"attributes\">\n    <attribute name=\"groups\">stock.group_stock_manager</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"before\">\n    <field name=\"x_pasillo\" optional=\"show\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Crear Colada",
+    "model": "stock.quant",
+    "type": "tree",
+    "priority": 161,
+    "inherit_name": "stock.quant.inventory.tree.editable",
+    "arch_db": "<data>\n<!---  <xpath expr=\"//tree\" position=\"attributes\">\n    <attribute name=\"create\">0</attribute>\n</xpath> -->\n</data>"
+  },
+  {
+    "name": "OV - ADICIONALES",
+    "model": "stock.move",
+    "type": "tree",
+    "priority": 1600,
+    "inherit_name": "stock.move.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='reference']\" position=\"after\">\n    <field name=\"group_id\" optional=\"show\"/>\n    <field name=\"origin\" optional=\"show\"/>\n    <field name=\"item\" optional=\"show\"/>\n    <field name=\"description_picking\" optional=\"show\"/>\n    <field name=\"comments\" optional=\"show\"/>\n    <field name=\"po_comments\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='product_uom_qty']\" position=\"after\">\n    <field name=\"quantity_done\" optional=\"show\"/>\n    <field name=\"weight\" optional=\"show\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - ADICIONALES",
+    "model": "stock.move",
+    "type": "search",
+    "priority": 1600,
+    "inherit_name": "stock.move.search",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='origin']\" position=\"after\">\n    <field name=\"x_item\"/>\n    <field name=\"description_picking\" string=\"Descripción\"/>\n    <field name=\"x_familia\"/>\n    <field name=\"x_asignado\"/>\n    <field name=\"x_ayudante\"/>\n    <field name=\"group_id\"/>\n  </xpath>\n  <search>\n    <searchpanel>\n      <field name=\"x_pasillo\" enable_counters=\"1\" select=\"multi\"/>    \n      <field name=\"x_largo\" enable_counters=\"1\" select=\"multi\"/>\n      <field name=\"x_alto\" enable_counters=\"1\" select=\"multi\"/>\n    </searchpanel>\n  </search>\n</data>"
+  },
+  {
+    "name": "OV - ADICIONALES_ov",
+    "model": "stock.move",
+    "type": "search",
+    "priority": 1600,
+    "inherit_name": "stock.move.search_ov",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='origin']\" position=\"after\">\n    <field name=\"x_item\"/>\n    <field name=\"x_familia\"/>\n    <field name=\"x_asignado\"/>\n    <field name=\"x_ayudante\"/>\n    <field name=\"group_id\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.move",
+    "type": "form",
+    "priority": 1600,
+    "inherit_name": "stock.move.form",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='reference']\" position=\"replace\">\n    <field name=\"picking_id\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='origin']\" position=\"before\">\n    <field name=\"item\"/>\n    <field name=\"description_picking\"/>\n    <field name=\"comments\"/>\n    <field name=\"po_comments\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='procure_method']\" position=\"after\">\n    <field name=\"sale_line_id\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='purchase_line_id']\" position=\"after\">\n    <field name=\"route_ids\" widget=\"many2many_tags\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='move_orig_ids']\" position=\"before\">\n    <field name=\"lot_ids\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"after\">\n    <field name=\"quantity_done\"/>\n    <field name=\"reserved_availability\"/>\n  </xpath>\n  <xpath expr=\"//form[1]/sheet[1]/group[1]/group[@name='linked_group']/field[@name='move_dest_ids']/tree[1]/field[@name='location_id']\" position=\"before\">\n    <field name=\"reference\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//form[1]/sheet[1]/group[1]/group[@name='linked_group']/field[@name='move_orig_ids']/tree[1]/field[@name='location_id']\" position=\"before\">\n    <field name=\"reference\" optional=\"show\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.picking",
+    "type": "search",
+    "priority": 1600,
+    "inherit_name": "stock.picking.internal.search",
+    "arch_db": "<data>\n  <xpath expr=\"//search[1]/field[@name='name']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\"/>\n    <field name=\"group_id\" string=\"Pedido - Grupo\"/>\n  </xpath>\n  <xpath expr=\"//filter[@name='status']\" position=\"before\">\n    <filter name=\"studio_group_by_24dZb\" string=\"Pedido - Grupo\" context=\"{'group_by': 'group_id'}\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS ENTREGAS",
+    "model": "stock.picking",
+    "type": "search",
+    "priority": 1600,
+    "inherit_name": "stock.picking.internal.search.delivery",
+    "arch_db": "<data>\n  <xpath expr=\"//search[1]/field[@name='name']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\"/>\n    <field name=\"group_id\" string=\"Pedido - Grupo\"/>\n  </xpath>\n  <xpath expr=\"//filter[@name='status']\" position=\"before\">\n    <filter name=\"studio_group_by_24dZb\" string=\"Pedido - Grupo\" context=\"{'group_by': 'group_id'}\"/>\n  </xpath>\n  <search>\n    <searchpanel>\n      <field name=\"carrier_id\" enable_counters=\"1\" select=\"multi\"/>\n      <field name=\"partner_id\" enable_counters=\"1\" select=\"multi\"/>\n    </searchpanel>\n  </search>\n</data>"
+  },
+  {
+    "name": "OV - Varios Entregas2",
+    "model": "stock.picking",
+    "type": "tree",
+    "priority": 2000,
+    "inherit_name": "stock.entregas.picking",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='x_completado']\" position=\"before\">\n    <field name=\"x_enviar\" optional=\"show\" widget=\"boolean_toggle\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Varios",
+    "model": "stock.move.line",
+    "type": "tree",
+    "priority": 3000,
+    "inherit_name": "stock.move.line.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree\" position=\"attributes\">\n    <attribute name=\"edit\">1</attribute>\n    <attribute name=\"multi_edit\">true</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"after\">\n    <field optional=\"show\" name=\"x_item\"/>\n    <field name=\"x_default_code_old\" string=\"AXI\" groups=\"stock.group_stock_manager,__export__.res_groups_106_7375280c\"/>\n    <field optional=\"show\" name=\"x_desc_picking\"/>\t\n  </xpath>\n  <xpath expr=\"//field[@name='reference']\" position=\"attributes\">\n    <attribute name=\"optional\">hide</attribute>\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='location_id']\" position=\"attributes\">\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='location_dest_id']\" position=\"attributes\">\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='product_uom_id']\" position=\"attributes\">\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='product_id']\" position=\"attributes\">\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='qty_done']\" position=\"attributes\">\n    <attribute name=\"readonly\">0</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='qty_done']\" position=\"after\">\n    <field optional=\"show\" name=\"product_uom_qty\"/>\n    <field optional=\"show\" name=\"x_demanda\" string=\"Cantidad Pedido\"/>\n    <field optional=\"show\" name=\"package_id\" string=\"Paquete PL\"/>\n    <field optional=\"show\" name=\"result_package_id\" string=\"Paquete PL Destino\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='package_id']\" position=\"attributes\">\n    <attribute name=\"readonly\">0</attribute>\n    <attribute name=\"optional\">hide</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='result_package_id']\" position=\"attributes\">\n    <attribute name=\"readonly\">0</attribute>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - varios",
+    "model": "stock.picking",
+    "type": "form",
+    "priority": 5000,
+    "inherit_name": "stock.picking.form",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"attributes\">                   \n    <attribute name=\"attrs\">   {'readonly':[('state','in',['cancel'])]}   </attribute> \n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"after\">                   \n    <field name=\"x_cliente\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='picking_type_id']\" position=\"before\">                   \n    <field name=\"x_asignado\" string=\"Asignado a\" domain=\"['|', ['department_id.id','=',3],['groups_id','=',113]]\" widget=\"many2one_avatar\"/>\n  </xpath>\n  <xpath expr=\"//button[@name='action_picking_move_tree']\" position=\"before\">\n    <button class=\"oe_stat_button\" icon=\"fa-file-o\" type=\"action\" name=\"1025\" string=\"Documentos de albarán\"/>\n  </xpath>\n  <xpath expr=\"//button[@name='action_assign']\" position=\"attributes\">\n    <attribute name=\"attrs\">{'invisible': [('state', '!=', 'done')]}</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='autorizacion_envio']\" position=\"after\">\n    <field name=\"x_pagina_final\" string=\"Mostrar hoja final\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='relleno']\" position=\"attributes\">\n    <attribute name=\"string\">Mostrar nº de tubos</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='backorder_id']\" position=\"before\">\n    <field name=\"x_esquema\" nolabel=\"1\" string=\"Resumen\" style=\"vertical-align:middle;background-color:grey;font-size:15px;color:yellow;\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='x_esquema']\" position=\"before\">                   \n    <field name=\"x_completado\" string=\"Completado parcial\" widget=\"boolean_toggle\"/>\n    <field name=\"x_enviar\" string=\"PDF preparado\" widget=\"boolean_toggle\" attrs=\"{'invisible': [('location_dest_id', '!=', 5)]}\"/>\n  </xpath>\n  <xpath expr=\"//button[@name='action_open_label_layout']\" position=\"before\">\n    <button class=\"oe_highlight\" name=\"1026\" string=\"Borrador\" type=\"action\" attrs=\"{'invisible': [('state', '!=', 'cancel')]}\"/>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]\" position=\"attributes\">\n    <attribute name=\"decoration-success\"/>\n    <attribute name=\"decoration-danger\"/>\n    <attribute name=\"decoration-bf\">1</attribute>\n    <attribute name=\"decoration-danger\">po_comments == 'Cancelado****' or comments == 'Cancelado sólo en la venta****' or comments == 'Cancelado**** Cancelado sólo en la venta****' or product_uom_qty &lt;=0</attribute>\n    <attribute name=\"decoration-success\">state != 'done' and product_uom_qty &gt; 0 and (quantity_done == product_uom_qty or quantity_done &gt; product_uom_qty)</attribute>\n    <attribute name=\"decoration-muted\">(po_comments != 'Cancelado****' or comments != 'Cancelado sólo en la venta****' or comments != 'Cancelado**** Cancelado sólo en la venta****') and state != 'done' and product_uom_qty &gt; 0 and quantity_done &lt; product_uom_qty</attribute>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]\" position=\"attributes\">\n    <attribute name=\"decoration-it\">state == 'done'</attribute>\n    <attribute name=\"decoration-danger\">po_comments == 'Cancelado****' or comments == 'Cancelado sólo en la venta****' or comments == 'Cancelado**** Cancelado sólo en la venta****' or product_uom_qty &lt;=0</attribute>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='product_id']\" position=\"before\">\n    <xpath expr=\"//button[@name='action_show_details']\" position=\"move\"/>\n    <xpath expr=\"//field[@name='todo']\" position=\"move\"/>\n    <xpath expr=\"//field[@name='item']\" position=\"move\"/>\n    <field name=\"x_tags_activities\" widget=\"many2many_tags\" readonly=\"1\" string=\"Actividades\" options=\"{'color_field': 'x_color'}\"/>\n    <field name=\"x_prioridad_linea\" widget=\"priority\" readonly=\"1\" string=\"Orden\"/>\n    <field name=\"x_default_code_old\" readonly=\"1\" string=\"AXI\" groups=\"stock.group_stock_manager,__export__.res_groups_106_7375280c\"/>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='product_id']\" position=\"after\">\n    <field name=\"x_familia\" optional=\"show\" class=\"text-center\"/>\n  </xpath>  \n  <xpath expr=\"//sheet[1]\" position=\"attributes\">\n    <attribute name=\"style\">min-width: 100%;</attribute>\n  </xpath>  \t\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='item']\" position=\"attributes\">\n    <attribute name=\"style\">background-color:grey;text-align:center;color:white;</attribute>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='comments']\" position=\"attributes\">\n    <attribute name=\"style\">background-color:grey;text-align:center;color:yellow;</attribute>\n    <attribute name=\"widget\">text</attribute>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='todo']\" position=\"attributes\">\n    <attribute name=\"string\">Actividad</attribute>\n    <attribute name=\"widget\">boolean_toggle</attribute>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='description_picking']\" position=\"attributes\">\n    <attribute name=\"optional\">show</attribute>\n    <attribute name=\"readonly\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='shipping_weight']\" position=\"attributes\">\n    <attribute name=\"readonly\">0</attribute>\n  </xpath>\n  <xpath expr=\"//form[1]/sheet[1]/notebook[1]/page[@name='operations']/field[@name='move_ids_without_package']/tree[1]\" position=\"attributes\">\n    <attribute name=\"default_order\">id</attribute>\n  </xpath>\n  <xpath expr=\"//button[@name='action_show_details']\" position=\"after\">\n    <field name=\"id\" string=\"Orden\" optional=\"show\" widget=\"handle\"/>\n  </xpath>\n  <xpath expr=\"//notebook[1]//page[2]//tree[1]//field[@name='po_comments']\" position=\"attributes\">\n    <attribute name=\"invisible\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='x_esquema']\" position=\"after\">\n    <field name=\"x_qty_done\" nolabel=\"1\" string=\"        \" widget=\"percentpie\" style=\"vertical-align:middle;width:60px;margin-top:10px;margin-right:0px;\"/>\n  </xpath>\n  <xpath expr=\"//button[@name='action_toggle_is_locked'][1]\" position=\"attributes\">\n      <attribute name=\"groups\">stock.group_stock_manager,__export__.res_groups_110_527f2c71,__export__.res_groups_111_1269f224</attribute> <!-- Reemplaza 'tu_nuevo_grupo' con el nuevo grupo al que deseas asignar los botones -->\n  </xpath>\n  <xpath expr=\"//button[@name='action_toggle_is_locked'][2]\" position=\"attributes\">\n      <attribute name=\"groups\">stock.group_stock_manager,__export__.res_groups_110_527f2c71,__export__.res_groups_111_1269f224</attribute> <!-- Reemplaza 'tu_nuevo_grupo' con el nuevo grupo al que deseas asignar los botones -->\n  </xpath>\n  <xpath expr=\"//button[@name='action_picking_move_tree']\" position=\"attributes\">\n      <attribute name=\"groups\">base.group_no_one,__export__.res_groups_110_527f2c71</attribute> <!-- Reemplaza 'tu_nuevo_grupo' con el nuevo grupo al que deseas asignar los botones -->\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - Motivo Devolucion",
+    "model": "stock.picking",
+    "type": "form",
+    "priority": 6000,
+    "inherit_name": "stock.picking.form",
+    "arch_db": "<data>\n  <xpath expr=\"//field[@name='x_pagina_final']\" position=\"after\">             \n    <field name=\"x_motivo\" style=\"background-color:grey;font-size:15px;color:white;\" attrs=\"{'invisible': [('picking_type_id', 'not in', (6, 12, 18, 24))], 'required': ['&amp;', ('state', 'not in', ('draft', 'done', 'cancel')), ('picking_type_id', 'in', (6, 12, 18, 24))]}\"/>\n  </xpath>\n</data>"
+  },
+  {
+    "name": "OV - VARIOS",
+    "model": "stock.picking",
+    "type": "tree",
+    "priority": 16000,
+    "inherit_name": "stock.entregas.picking.tree",
+    "arch_db": "<data>\n  <xpath expr=\"//tree[1]/field[@name='location_dest_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='location_id']\" position=\"replace\"/>\n  <xpath expr=\"//tree[1]/field[@name='priority']\" position=\"after\">\n    <field name=\"x_qty_done\" optional=\"show\" widget=\"percentpie\" string=\" \" width=\"40px\" class=\"text-center\"/>\n    <field name=\"x_esquema\" optional=\"show\" class=\"text-center\"/>\n    <button class=\"oe_inline\" icon=\"fa-reply\" name=\"__export__.ir_act_server_1272_b233eb3c\" type=\"action\" help=\"Albaranes origen\"/>\n    <button class=\"oe_inline\" icon=\"fa-share\" name=\"__export__.ir_act_server_1271_4c35f738\" type=\"action\" help=\"Albaranes destino\"/>\n    <field name=\"x_asignado\" optional=\"show\" domain=\"[('department_id.id','=',3)]\" widget=\"many2one_avatar\" class=\"text-center\"/>    \n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"attributes\">\n    <attribute name=\"invisible\">1</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"attributes\">\n    <attribute name=\"string\">Dirección</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='partner_id']\" position=\"after\">\n    <field name=\"x_cliente\" string=\"Cliente\" optional=\"show\"/>\n  </xpath>\n  <xpath expr=\"//tree[1]/field[@name='origin']\" position=\"after\">\n    <field name=\"carrier_id\" optional=\"show\" string=\"Transportista\"/>\n    <field name=\"weight\" optional=\"show\" class=\"text-center\"/>\n    <field name=\"shipping_weight\" optional=\"show\" class=\"text-center\"/>\t\n  </xpath>\n  <xpath expr=\"//tree[1]\" position=\"attributes\">\n    <attribute name=\"expand\">1</attribute>\n    <attribute name=\"default_order\">scheduled_date asc, priority desc,name asc</attribute>    \n    <attribute name=\"delete\">false</attribute>\n  </xpath>\n  <xpath expr=\"//field[@name='name']\" position=\"before\">\n    <field name=\"group_id\" decoration-bf=\"1\" optional=\"show\" string=\"Pedido\" class=\"text-center\"/>\n  </xpath>\n  <xpath expr=\"//field[@name='group_id']\" position=\"attributes\">\n    <attribute name=\"decoration-bf\">1</attribute>    \n    <attribute name=\"class\">text-center</attribute>    \n  </xpath>  \n  <xpath expr=\"//field[@name='x_esquema']\" position=\"after\">\n    <field name=\"x_enviar\" width=\"5px\" optional=\"show\" string=\"Enviar\" class=\"text-center\" widget=\"boolean_toggle\"/>\n    <field name=\"x_completado\" width=\"5px\" optional=\"show\" string=\"Comp.\" class=\"text-center\" widget=\"boolean_toggle\"/>\n  </xpath>\n</data>"
+  }
+]
