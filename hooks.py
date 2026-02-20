@@ -4,6 +4,15 @@ import re
 from odoo import api, SUPERUSER_ID
 
 
+def _stable_view_xml_name(model, inherit_name, ov_name, vtype, priority):
+    """Genera un nombre de xml_id estable (independiente de IDs numéricos de BD)."""
+    import hashlib
+    key = f"{model}|{inherit_name or ''}|{ov_name}|{vtype}|{priority or ''}".encode("utf-8")
+    h = hashlib.sha1(key).hexdigest()[:10]
+    m = re.sub(r"[^a-zA-Z0-9]+", "_", (model or "view")).strip("_").lower()
+    return f"view_{m}_{h}"
+
+
 _FIELD_MAP = {
     # stock.picking
     "x_asignado": "sid_asignado",
@@ -104,6 +113,8 @@ def post_init_create_sid_stock_views_ov(cr, registry):
         defs = json.load(f)
 
     # Crear nuevas vistas SID y desactivar las OV antiguas (para evitar duplicidad)
+    IMD = env["ir.model.data"].sudo()
+
     for d in defs:
         ov_name = d["name"]
         model = d["model"]
@@ -143,14 +154,19 @@ def post_init_create_sid_stock_views_ov(cr, registry):
             "active": True,
         })
 
-        # Asignar xmlid estable para la vista creada
-        env["ir.model.data"].sudo().create({
-            "module": "sid_stock_views_ov",
-            "name": f"view_{new_view.id}",
-            "model": "ir.ui.view",
-            "res_id": new_view.id,
-            "noupdate": True,
-        })
+        # Asignar xmlid estable para la vista creada (NO basado en ID numérico)
+        xml_name = _stable_view_xml_name(model, inherit_name, ov_name, vtype, priority)
+        if not IMD.search([("module", "=", "sid_stock_views_ov"), ("name", "=", xml_name)], limit=1):
+            IMD.create({
+                "module": "sid_stock_views_ov",
+                "name": xml_name,
+                "model": "ir.ui.view",
+                "res_id": new_view.id,
+                "noupdate": True,
+            })
+
+        # asegurar persistencia antes de validar siguientes vistas
+        env.cr.flush()
 
     # Desactivar vistas OV antiguas sin xmlid propio (o con __export__)
     to_disable = View.search([("name", "=like", "OV -%"), ("model", "ilike", "stock.")])
