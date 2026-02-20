@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <!--
+      Objetivo: NO reutilizar/exportar vistas Studio ni recrearlas por hook.
+      Aquí solo heredamos vistas estándar y añadimos campos sid_*.
+
+      Nota: si en tu base los xml_id difieren, localízalos y ajusta inherit_id.
+    -->
+
+    <!-- Stock Picking: Form -->
+    <record id="view_picking_form_ov" model="ir.ui.view">
+      <field name="name">stock.picking.form.ov</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.view_picking_form"/>
+      <field name="arch" type="xml">
+        <!-- Añadimos una pestaña OV con los campos sid_* (sin x_*) -->
+        <xpath expr="//notebook" position="inside">
+          <page string="OV">
+            <group>
+              <group>
+                <field name="sid_asignado"/>
+                <field name="sid_ayudante"/>
+              </group>
+              <group>
+                <field name="sid_enviar"/>
+                <field name="sid_completado"/>
+              </group>
+            </group>
+            <group>
+              <group>
+                <field name="sid_cliente" readonly="1"/>
+                <field name="sid_pedido_cliente" readonly="1"/>
+              </group>
+            </group>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+    <!-- Stock Picking: Tree -->
+    <record id="view_picking_tree_ov" model="ir.ui.view">
+      <field name="name">stock.picking.tree.ov</field>
+      <field name="model">stock.picking</field>
+      <field name="inherit_id" ref="stock.vpicktree"/>
+      <field name="arch" type="xml">
+        <xpath expr="//tree/field[@name='name']" position="after">
+          <field name="sid_asignado" optional="show"/>
+          <field name="sid_enviar" optional="show"/>
+          <field name="sid_completado" optional="show"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>
