@@ -73,6 +73,23 @@ def _ensure_action_xmlid(env, action_id):
 def _convert_action_names(env, arch):
     def repl(m):
         prefix, name, suffix = m.group(1), m.group(2), m.group(3)
+
+        # Caso: ya viene como referencia por xmlid en formato %(... )d
+        # Ej: name="%(__export__.ir_act_window_1025_xxxxx)d"
+        if name.startswith('%(') and name.endswith(')d'):
+            inner = name[2:-2]
+            # __export__.xxx -> resolve a res_id y sustituir
+            if inner.startswith('__export__.'):
+                export_name = inner.split('__export__.', 1)[1]
+                imd = env['ir.model.data'].sudo().search([
+                    ('module', '=', '__export__'),
+                    ('name', '=', export_name),
+                ], limit=1)
+                if imd and imd.model in ('ir.actions.actions', 'ir.actions.server', 'ir.actions.act_window'):
+                    xmlid = _ensure_action_xmlid(env, imd.res_id)
+                    return f'{prefix}%({xmlid})d{suffix}'
+            # Si no lo tocamos, devolvemos tal cual
+            return m.group(0)
         # numérico
         if name.isdigit():
             xmlid = _ensure_action_xmlid(env, int(name))
