@@ -2,9 +2,9 @@
 {
     "name": "SID Stock Views OV",
     "summary": "Recrea vistas OV de Stock con referencias estables (sin IDs numéricos) y campos SID base.",
-    "version": "15.0.1.0.2",
+    "version": "15.0.1.0.3",
     "category": "Inventory",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "author": "SIDSA",
     "depends": [
         "stock",

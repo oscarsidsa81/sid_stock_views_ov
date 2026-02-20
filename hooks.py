@@ -25,23 +25,41 @@ _FIELD_MAP = {
 _RE_ACTION_BTN = re.compile(r'(\btype="action"[^>]*\bname=")([^"]+)(")', re.IGNORECASE)
 
 def _ensure_action_xmlid(env, action_id):
-    """Asegura xmlid sid_stock_actions_ov.action_<id> sobre ir.actions.actions.<id>"""
+    """Devuelve un xmlid resoluble para la acción.
+
+    Preferencia:
+      1) Si la acción ya tiene xmlid en cualquier módulo => usarlo (portable).
+      2) Si no tiene => crear sid_stock_actions_ov.action_<id> apuntando a ir.actions.actions (fallback).
+    """
     IMD = env["ir.model.data"].sudo()
+    action_id = int(action_id)
+
+    # 1) ¿Ya existe xmlid en algún módulo?
+    existing_any = IMD.search([
+        ("res_id", "=", action_id),
+        ("model", "in", ["ir.actions.actions", "ir.actions.act_window", "ir.actions.server"]),
+    ], limit=1)
+    if existing_any:
+        return f"{existing_any.module}.{existing_any.name}"
+
+    # 2) Crear fallback propio
     xml_name = f"action_{action_id}"
     existing = IMD.search([("module", "=", "sid_stock_actions_ov"), ("name", "=", xml_name)], limit=1)
     if existing:
         return f"sid_stock_actions_ov.{xml_name}"
-    # Nota: en Odoo los IDs de acciones viven en ir.actions.actions
-    # y los registros específicos (ir.actions.server/act_window/...) comparten ese id.
-    # Creamos el xmlid apuntando a ir.actions.actions.
+
     IMD.create({
         "module": "sid_stock_actions_ov",
         "name": xml_name,
         "model": "ir.actions.actions",
-        "res_id": int(action_id),
+        "res_id": action_id,
         "noupdate": True,
     })
+    # IMPORTANTÍSIMO: asegurar que el xmlid existe en BD antes de validar la vista
+    env.cr.flush()
+
     return f"sid_stock_actions_ov.{xml_name}"
+
 
 def _convert_action_names(env, arch):
     def repl(m):
