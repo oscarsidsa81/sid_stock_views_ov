@@ -30,7 +30,7 @@
             <group>
               <group>
                 <field name="sid_cliente" readonly="1"/>
-                <field name="sid_pedido_cliente" readonly="1"/>
+                <field name="pedido_cliente" readonly="1"/>
               </group>
             </group>
           </page>
