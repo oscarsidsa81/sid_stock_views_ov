@@ -17,11 +17,10 @@
       <field name="arch" type="xml">
         <!-- Añadimos una pestaña OV con los campos sid_* (sin x_*) -->
         <xpath expr="//notebook" position="inside">
-          <page string="OV">
+          <page string="Asignar">
             <group>
               <group>
                 <field name="sid_asignado"/>
-                <field name="sid_ayudante"/>
               </group>
               <group>
                 <field name="sid_enviar"/>
@@ -47,8 +46,7 @@
       <field name="arch" type="xml">
         <xpath expr="//tree/field[@name='name']" position="after">
           <field name="sid_asignado" optional="show"/>
-          <field name="sid_enviar" optional="show"/>
-          <field name="sid_completado" optional="show"/>
+          <field name="sid_ayudante"/>
         </xpath>
       </field>
     </record>
