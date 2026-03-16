@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ALBARANES ORIGEN (PRECEDENTES) -->
+        <record id="sid_act_server_picking_origen" model="ir.actions.server">
+            <field name="name">Albaranes origen</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+pickings = env['stock.picking']
+for picking in records:
+    prev = env['stock.picking'].search([
+        ('move_lines.move_dest_ids.picking_id', '=', picking.id)
+    ])
+    pickings |= prev
+
+if pickings:
+    action = {
+        'name': 'Albaranes origen',
+        'type': 'ir.actions.act_window',
+        'res_model': 'stock.picking',
+        'view_mode': 'tree,form',
+        'domain': [('id', 'in', pickings.ids)],
+        'target': 'current',
+    }
+      ]]></field>
+        </record>
+
+        <!-- ALBARANES DESTINO (SIGUIENTES) -->
+        <record id="sid_act_server_picking_destino" model="ir.actions.server">
+            <field name="name">Albaranes destino</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="state">code</field>
+            <field name="code"><![CDATA[
+action = False
+pickings = env['stock.picking']
+for picking in records:
+    nxt = env['stock.picking'].search([
+        ('move_lines.move_orig_ids.picking_id', '=', picking.id)
+    ])
+    pickings |= nxt
+
+if pickings:
+    action = {
+        'name': 'Albaranes destino',
+        'type': 'ir.actions.act_window',
+        'res_model': 'stock.picking',
+        'view_mode': 'tree,form',
+        'domain': [('id', 'in', pickings.ids)],
+        'target': 'current',
+    }
+      ]]></field>
+        </record>
+
+    </data>
+</odoo>

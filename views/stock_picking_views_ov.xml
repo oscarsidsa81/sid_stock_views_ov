@@ -1,55 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
+    <data>
+        <?xml version="1.0"?>
+        <tree string="Picking list" js_class="lazy_column_list" multi_edit="1" create="0" edit="1">
+            <field name="date" groups="base.group_no_one"
+                   decoration-danger="(state not in ('cancel','done')) and date &gt; current_date"/>
+            <field name="reference"/>
+            <field name="group_id" optional="show" string="Pedido" readonly="1"/>
+            <field name="tag_id" widget="many2many_tags" readonly="0" string="Actividades"
+                   options="{'color_field': 'color'}"/>
+            <field name="todo" string="Act." widget="boolean_toggle" optional="show"/>
+            <field name="item" readonly="1"/>
+            <field name="family" readonly="1"/>
+            <field name="picking_type_id" invisible="1"/>
+            <field name="product_id" readonly="1"/>
+            <field name="description_picking" readonly="1"/>
+            <field name="location_id" options="{'no_create': True}" string="From"/>
+            <field name="location_dest_id" options="{'no_create': True}" string="To"/>
+            <field name="product_packaging_id" optional="hide" groups="product.group_stock_packaging"/>
+            <field name="product_uom_qty"/>
+            <field name="product_uom" options="{'no_open': True, 'no_create': True}" string="Unit of Measure"
+                   groups="uom.group_uom"/>
+            <field name="company_id" groups="base.group_multi_company"/>
+            <field name="state" widget="badge" decoration-success="state == 'done'"
+                   decoration-info="state not in ('done', 'cancel')"/>
+        </tree>
 
-    <!--
-      Objetivo: NO reutilizar/exportar vistas Studio ni recrearlas por hook.
-      Aquí solo heredamos vistas estándar y añadimos campos sid_*.
+        <!--
+          Objetivo: NO reutilizar/exportar vistas Studio ni recrearlas por hook.
+          Aquí solo heredamos vistas estándar y añadimos campos sid_*.
 
-      Nota: si en tu base los xml_id difieren, localízalos y ajusta inherit_id.
-    -->
+          Nota: si en tu base los xml_id difieren, localízalos y ajusta inherit_id.
+        -->
 
-    <!-- Stock Picking: Form -->
-    <record id="view_picking_form_ov" model="ir.ui.view">
-      <field name="name">stock.picking.form.ov</field>
-      <field name="model">stock.picking</field>
-      <field name="inherit_id" ref="stock.view_picking_form"/>
-      <field name="arch" type="xml">
-        <!-- Añadimos una pestaña OV con los campos sid_* (sin x_*) -->
-        <xpath expr="//notebook" position="inside">
-          <page string="Asignar">
-            <group>
-              <group>
-                <field name="sid_asignado"/>
-              </group>
-              <group>
-                <field name="sid_enviar"/>
-                <field name="sid_completado"/>
-              </group>
-            </group>
-            <group>
-              <group>
-                <field name="sid_cliente" readonly="1"/>
-                <field name="pedido_cliente" readonly="1"/>
-              </group>
-            </group>
-          </page>
-        </xpath>
-      </field>
-    </record>
+        <!-- Stock Picking: Form -->
+        <record id="view_picking_form_ov" model="ir.ui.view">
+            <field name="name">stock.picking.sid_form.mod</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- Añadimos una pestaña OV con los campos sid_* (sin x_*) -->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Asignar">
+                        <group>
+                            <group>
+                                <field name="sid_asignado"/>
+                            </group>
+                            <group>
+                                <field name="sid_enviar"/>
+                                <field name="sid_completado"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="sid_cliente" readonly="1"/>
+                                <field name="pedido_cliente" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
 
-    <!-- Stock Picking: Tree -->
-    <record id="view_picking_tree_ov" model="ir.ui.view">
-      <field name="name">stock.picking.tree.ov</field>
-      <field name="model">stock.picking</field>
-      <field name="inherit_id" ref="stock.vpicktree"/>
-      <field name="arch" type="xml">
-        <xpath expr="//tree/field[@name='name']" position="after">
-          <field name="sid_asignado" optional="show"/>
-          <field name="sid_ayudante"/>
-        </xpath>
-      </field>
-    </record>
+        <!-- Stock Picking: Tree -->
+        <record id="view_stock_picking_tree_madrid_delivery_return" model="ir.ui.view">
+            <field name="name">stock.picking.tree.madrid.delivery.return</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <?xml version="1.0"?>
+                <tree string="Picking list"
+                      js_class="lazy_column_list"
+                      multi_edit="1"
+                      sample="1"
+                      expand="1"
+                      default_order="scheduled_date asc, priority desc, name asc"
+                      delete="false">
 
-  </data>
+                    <field name="qty_done_pct" optional="show" widget="percentpie" string=" " width="40px"
+                           class="text-center"/>
+                    <field name="sid_scope_summary" optional="show" class="text-center"/>
+                    <field name="sid_enviar" optional="show" string="Enviar" width="5px" class="text-center"
+                           widget="boolean_toggle"/>
+                    <field name="sid_completado" optional="show" string="Comp." width="5px" class="text-center"
+                           widget="boolean_toggle"/>
+                    <button class="oe_inline" icon="fa-reply"
+                            name="%(sid_stock_views_ov.sid_act_server_picking_origen)d"
+                            type="action"
+                            help="Albaranes origen"/>
+                    <button class="oe_inline" icon="fa-share"
+                            name="%(sid_stock_views_ov.sid_act_server_picking_destino)d"
+                            type="action"
+                            help="Albaranes destino"/>
+                    <field name="sid_asignado" optional="show"
+                           domain="[('department_id.id','=',3)]"
+                           widget="many2one_avatar"
+                           class="text-center"/>
+
+                    <!-- NAME + Pedido antes -->
+                    <field name="group_id" string="Pedido" optional="show" class="text-center" decoration-bf="1"/>
+                    <field name="name" decoration-bf="1"/>
+
+                    <!-- (QUITADOS) location_id y location_dest_id, como en tu xpath replace -->
+
+                    <!-- Partner renombrado + x_cliente después -->
+                    <field name="partner_id" string="Dirección" optional="show"/>
+                    <field name="sid_cliente" string="Cliente" optional="show"/>
+
+                    <field name="is_signed" string="Signed" optional="hide" groups="stock.group_stock_sign_delivery"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
+
+                    <field name="scheduled_date" optional="show" width="30px" class="text-center"
+                           widget="remaining_days"
+                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+
+                    <field name="picking_type_code" invisible="1"/>
+                    <field name="products_availability_state" invisible="1" options="{'lazy': true}"/>
+                    <field name="products_availability" options="{'lazy': true}" optional="hide"
+                           attrs="{'invisible': ['|', ('picking_type_code', '!=', 'outgoing'), ('state', 'not in', ['confirmed', 'waiting', 'assigned'])]}"
+                           decoration-success="state == 'assigned' or products_availability_state == 'available'"
+                           decoration-warning="state != 'assigned' and products_availability_state in ('expected', 'available')"
+                           decoration-danger="state != 'assigned' and products_availability_state == 'late'"/>
+
+                    <field name="date_deadline" optional="hide" widget="remaining_days"
+                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <field name="date_done" string="Effective Date" optional="hide"/>
+
+                    <!-- origin oculto -->
+                    <field name="origin" optional="show" invisible="1"/>
+
+                    <!-- tus campos después de origin (aunque esté invisible) -->
+                    <field name="carrier_id" optional="show" string="Transportista"/>
+                    <field name="weight" optional="show" class="text-center"/>
+                    <field name="shipping_weight" optional="show" class="text-center"/>
+
+                    <field name="backorder_id" optional="hide"/>
+                    <field name="picking_type_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+
+                    <field name="state" optional="show" widget="badge"
+                           decoration-success="state == 'done'"
+                           decoration-info="state not in ('done', 'cancel', 'draft')"
+                           decoration-muted="state == 'draft'"/>
+
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                    <field name="json_popover" nolabel="1" widget="stock_rescheduling_popover"
+                           attrs="{'invisible': [('json_popover', '=', False)]}"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
 </odoo>

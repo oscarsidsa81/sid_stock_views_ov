@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_stock_move_tree_ov" model="ir.ui.view">
+            <field name="name">stock.move.tree_ov</field>
+            <field name="model">stock.move</field>
+            <field name="priority">12</field>
+            <field name="arch" type="xml">
+                <tree string="Moves" create="0" multi_edit="1" edit="1"
+                      decoration-danger="(state not in ('cancel','done')) and date &lt; current_date">
+                    <field name="date" groups="base.group_no_one"/>
+                    <field name="reference"/>
+                    <field name="group_id" optional="show" string="Pedido" readonly="1"/>
+                    <field name="tag_id" widget="many2many_tags" readonly="0"
+                           string="Actividades" options="{'color_field': 'color'}"/>
+                    <field name="todo" string="Act" widget="boolean_toggle" optional="show"/>
+                    <field name="item" readonly="1"/>
+                    <field name="family" readonly="1"/>
+                    <field name="picking_type_id" invisible="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="description_picking" readonly="1"/>
+                    <field name="location_id" options="{'no_create': True}" string="From"/>
+                    <field name="location_dest_id" options="{'no_create': True}" string="To"/>
+                    <field name="product_packaging_id" optional="hide" groups="product.group_stock_packaging"/>
+                    <field name="product_uom_qty"/>
+                    <field name="product_uom" options="{'no_open': True, 'no_create': True}"
+                           string="Unit of Measure" groups="uom.group_uom"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'done'"
+                           decoration-info="state not in ('done', 'cancel')"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_stock_picking_madrid_entregas_devoluciones" model="ir.actions.act_window">
+            <field name="name">Entregas y Devoluciones Madrid</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <!-- Modos disponibles (como en tu captura) -->
+            <field name="view_mode">tree,form,calendar</field>
+            <!-- Vista tree por defecto -->
+            <field name="view_id" ref="view_stock_picking_tree_madrid_delivery_return"/>
+            <!-- Dominio -->
+            <field name="domain">
+                [('state','in',('waiting','confirmed','assigned')),
+                ('picking_type_id','in',[36,2,6])]
+            </field>
+            <!-- Contexto (si quieres agrupar por estado como se ve en muchas listas) -->
+            <field name="context">{'group_by': 'state'}</field>
+            <!-- Opcional: límite -->
+            <field name="limit">80</field>
+        </record>
+<!--TODO queda completar menuitems con acciones de ventana y vistas-->
+        <record id="action_stock_picking_madrid_picking_recepciones" model="ir.actions.act_window">
+            <field name="name">Entregas y Devoluciones Madrid</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <!-- Modos disponibles (como en tu captura) -->
+            <field name="view_mode">tree,form,calendar</field>
+            <!-- Vista tree por defecto -->
+            <field name="view_id" ref="view_stock_picking_tree_madrid_delivery_return"/>
+            <!-- Dominio -->
+            <field name="domain">
+                [('state','in',('waiting','confirmed','assigned')),
+                ('picking_type_id','in',[36,2,6])]
+            </field>
+            <!-- Contexto (si quieres agrupar por estado como se ve en muchas listas) -->
+            <field name="context">{'group_by': 'state'}</field>
+            <!-- Opcional: límite -->
+            <field name="limit">80</field>
+        </record>
+
+        <!-- Menú padre: Asignación (hijo de stock.menu_stock_root) -->
+        <menuitem id="menu_asignacion_root"
+                  name="Asignación"
+                  parent="stock.menu_stock_root"
+                  sequence="10"/>
+
+        <!-- 5 hijos como en la imagen (aún sin acciones) -->
+        <menuitem id="menu_madrid_picking_asignacion_por_linea"
+                  name="Madrid: Picking / Asignación por línea"
+                  parent="menu_asignacion_root"
+                  action=
+                  sequence="10"/>
+
+        <menuitem id="menu_madrid_picking_y_recepciones"
+                  name="Madrid: Picking y Recepciones"
+                  parent="menu_asignacion_root"
+                  action=
+                  sequence="20"/>
+
+        <menuitem id="menu_madrid_entregas_y_devoluciones"
+                  name="Madrid: Entregas y Devoluciones"
+                  parent="menu_asignacion_root"
+                  action="action_stock_picking_madrid_entregas_devoluciones"
+                  sequence="30"/>
+
+        <menuitem id="menu_puertollano_entregas_y_devoluciones"
+                  name="Puertollano: Entregas y Devoluciones"
+                  parent="menu_asignacion_root"
+                  action=
+                  sequence="40"/>
+
+        <menuitem id="menu_certificados"
+                  name="Certificados"
+                  parent="menu_asignacion_root"
+                  action=
+                  sequence="50"/>
+
+    </data>
+</odoo>
