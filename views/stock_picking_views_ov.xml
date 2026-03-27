@@ -92,7 +92,7 @@
                             type="action"
                             help="Albaranes destino"/>
                     <field name="sid_asignado" optional="show"
-                           domain="[('department_id.id','=',3)]"
+                           domain="[('department_id', '=', %(sid_stock_cfg.hr_department__almacen__c1)d)]"
                            widget="many2one_avatar"
                            class="text-center"/>
 

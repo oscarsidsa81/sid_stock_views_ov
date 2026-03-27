@@ -42,10 +42,14 @@
             <!-- Vista tree por defecto -->
             <field name="view_id" ref="view_stock_picking_tree_madrid_delivery_return"/>
             <!-- Dominio -->
-            <field name="domain">
-                [('state','in',('waiting','confirmed','assigned')),
-                ('picking_type_id','in',[36,2,6])]
-            </field>
+            <field name="domain" eval="[
+                ('state', 'in', ('waiting', 'confirmed', 'assigned')),
+                ('picking_type_id', 'in', [
+                    ref('sid_stock_cfg.stock_picking_type__mad__outgoing__seq2__entrega_a_cliente__c1'),
+                    ref('stock.picking_type_out'),
+                    ref('sid_stock_cfg.stock_picking_type__mad__incoming__seq8__returns__c1'),
+                ])
+            ]"/>
             <!-- Contexto (si quieres agrupar por estado como se ve en muchas listas) -->
             <field name="context">{'group_by': 'state'}</field>
             <!-- Opcional: límite -->
@@ -61,10 +65,14 @@
             <!-- Vista tree por defecto -->
             <field name="view_id" ref="view_stock_picking_tree_madrid_delivery_return"/>
             <!-- Dominio -->
-            <field name="domain">
-                [('state','in',('waiting','confirmed','assigned')),
-                ('picking_type_id','in',[36,2,6])]
-            </field>
+            <field name="domain" eval="[
+                ('state', 'in', ('waiting', 'confirmed', 'assigned')),
+                ('picking_type_id', 'in', [
+                    ref('sid_stock_cfg.stock_picking_type__mad__outgoing__seq2__entrega_a_cliente__c1'),
+                    ref('stock.picking_type_out'),
+                    ref('sid_stock_cfg.stock_picking_type__mad__incoming__seq8__returns__c1'),
+                ])
+            ]"/>
             <!-- Contexto (si quieres agrupar por estado como se ve en muchas listas) -->
             <field name="context">{'group_by': 'state'}</field>
             <!-- Opcional: límite -->
@@ -81,13 +89,13 @@
         <menuitem id="menu_madrid_picking_asignacion_por_linea"
                   name="Madrid: Picking / Asignación por línea"
                   parent="menu_asignacion_root"
-                  action=
+                  action=""
                   sequence="10"/>
 
         <menuitem id="menu_madrid_picking_y_recepciones"
                   name="Madrid: Picking y Recepciones"
                   parent="menu_asignacion_root"
-                  action=
+                  action=""
                   sequence="20"/>
 
         <menuitem id="menu_madrid_entregas_y_devoluciones"
@@ -99,13 +107,13 @@
         <menuitem id="menu_puertollano_entregas_y_devoluciones"
                   name="Puertollano: Entregas y Devoluciones"
                   parent="menu_asignacion_root"
-                  action=
+                  action=""
                   sequence="40"/>
 
         <menuitem id="menu_certificados"
                   name="Certificados"
                   parent="menu_asignacion_root"
-                  action=
+                  action=""
                   sequence="50"/>
 
     </data>
