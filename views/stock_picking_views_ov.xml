@@ -13,7 +13,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='picking_type_id']" position="before">
                     <field name="sid_asignado" string="Asignado a: " domain="[
-                    ['department_id.id','=',ref('hr.department_warehouse')]
+                    ['department_id','=',ref('hr.department_warehouse')]
                     ]"/>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
@@ -47,22 +47,17 @@
                     <attribute name="decoration-success"></attribute>
                     <attribute name="decoration-danger"></attribute>
                     <attribute name="decoration-bf">1</attribute>
-                    <attribute name="decoration-danger">po_comments == 'Cancelado****' or comments == 'Cancelado
-                        sólo en la venta****' or comments == 'Cancelado**** Cancelado sólo en la venta****' or
-                        product_uom_qty &lt;=0
+                    <attribute name="decoration-danger">po_comments == 'Cancelado****' or comments in ['Cancelado sólo
+                        en la venta****', 'Cancelado**** Cancelado sólo en la venta****'] or product_uom_qty &lt;= 0
                     </attribute>
-                    <attribute name="decoration-success">state != 'done' and product_uom_qty > 0 and (quantity_done
-                        == product_uom_qty or quantity_done &gt; product_uom_qty)
+                    <attribute name="decoration-success">state != 'done' and product_uom_qty &gt; 0 and quantity_done
+                        &gt;= product_uom_qty
                     </attribute>
-                    <attribute name="decoration-muted">(po_comments != 'Cancelado****' or comments != 'Cancelado
-                        sólo en la venta****' or comments != 'Cancelado**** Cancelado sólo en la venta****') and
-                        state != 'done' and product_uom_qty > 0 and quantity_done &lt; product_uom_qty
+                    <attribute name="decoration-muted">po_comments != 'Cancelado****' and comments not in ['Cancelado
+                        sólo en la venta****', 'Cancelado**** Cancelado sólo en la venta****'] and state != 'done' and
+                        product_uom_qty &gt; 0 and quantity_done &lt; product_uom_qty
                     </attribute>
                     <attribute name="decoration-it">state == 'done'</attribute>
-                    <attribute name="decoration-danger">po_comments == 'Cancelado****' or comments == 'Cancelado
-                        sólo en la venta****' or comments == 'Cancelado**** Cancelado sólo en la venta****' or
-                        product_uom_qty &lt;=0
-                    </attribute>
                 </xpath>
 
                 <xpath expr="//notebook[1]//page[2]//tree[1]//field[@name='product_id']" position="after">
