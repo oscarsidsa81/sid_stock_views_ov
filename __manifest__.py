@@ -12,6 +12,7 @@
     ],
     'data': [
         'views/stock_picking_views_ov.xml',
+        'data/server_actions.xml',
     ],
     'installable': True,
     'application': False,
