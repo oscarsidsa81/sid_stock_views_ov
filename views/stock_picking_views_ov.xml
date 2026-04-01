@@ -12,9 +12,8 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='picking_type_id']" position="before">
-                    <field name="sid_asignado" string="Asignado a: " domain="[
-                    ['department_id','=',ref('hr.department_warehouse')]
-                    ]"/>
+                    <field name="sid_asignado" string="Asignado a: "
+                           domain="[('department_id', '=', ref('hr.department_warehouse'))]"/>
                 </xpath>
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="sid_cliente" readonly="1"/>
@@ -130,7 +129,7 @@
                             type="action"
                             help="Albaranes destino"/>
                     <field name="sid_asignado" optional="show"
-                           domain="[('department_id', '=', %(hr.department.warehouse)d)]"
+                           domain="[('department_id', '=', ref('hr.department_warehouse'))]"
                            widget="many2one_avatar"
                            class="text-center"/>
 
