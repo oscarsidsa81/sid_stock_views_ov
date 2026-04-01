@@ -2,8 +2,6 @@
 <odoo>
     <data>
 
-        <!-- Stock Picking: Form -->
-
         <record id="view_picking_form_ov" model="ir.ui.view">
             <field name="name">stock.picking.sid_form.mod</field>
             <field name="model">stock.picking</field>
@@ -32,14 +30,8 @@
                            style="vertical-align:middle;background-color:grey;font-size:15px;color:yellow;"/>
                 </xpath>
                 <xpath expr="//field[@name='qty_done_pct']" position="before">
-                    <!--            <field name="sid_enviar" string="PDF preparado" widget="boolean_toggle"-->
-                    <!--                   attrs="{'invisible': [('picking_type_id.code', '!=', 'incoming')]}"/>TODO HACER MÓDULO PARA AGENCIAS PDF-->
                     <field name="sid_completado" string="Completado: "/>
                 </xpath>
-                <!--        <xpath expr="//button[@name='action_open_label_layout']" position="before">-->
-                <!--            <button class="oe_highlight" name="1026" string="Borrador" type="action"-->
-                <!--                    attrs="{'invisible': [('state', '!=', 'cancel')]}"/>-->
-                <!--        </xpath> TODO HACER MÓDULO PARA AGENCIAS PDF-->
 
                 <xpath expr="//notebook[1]//page[2]//tree[1]" position="attributes">
                     <attribute name="decoration-success"></attribute>
