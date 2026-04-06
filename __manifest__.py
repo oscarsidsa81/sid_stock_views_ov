@@ -9,6 +9,8 @@
     'depends': [
         'stock',
         'sid_stock_actions_ov',
+        'sid_stock_base',
+
     ],
     'data': [
         'data/server_actions.xml',
