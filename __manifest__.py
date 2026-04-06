@@ -11,9 +11,9 @@
         'sid_stock_actions_ov',
     ],
     'data': [
+        'views/stock_picking_views_ov.xml',
         'data/server_actions.xml',
         'data/view_actions.xml',
-        'views/stock_picking_views_ov.xml',
     ],
     'installable': True,
     'application': False,
