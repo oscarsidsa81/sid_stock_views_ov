@@ -102,14 +102,14 @@
                            widget="boolean_toggle"/>
                     <field name="sid_completado" optional="show" string="Comp." width="5px" class="text-center"
                            widget="boolean_toggle"/>
-                    <button class="oe_inline" icon="fa-reply"
-                            name="%(sid_stock_views_ov.sid_act_server_picking_origen)d"
-                            type="object"
-                            help="Albaranes origen"/>
-                    <button class="oe_inline" icon="fa-share"
-                            name="%(sid_stock_views_ov.sid_act_server_picking_destino)d"
-                            type="object"
-                            help="Albaranes destino"/>
+<!--                    <button class="oe_inline" icon="fa-reply"-->
+<!--                            name="%(sid_stock_views_ov.sid_act_server_picking_origen)d"-->
+<!--                            type="action"-->
+<!--                            help="Albaranes origen"/>-->
+<!--                    <button class="oe_inline" icon="fa-share"-->
+<!--                            name="%(sid_stock_views_ov.sid_act_server_picking_destino)d"-->
+<!--                            type="action"-->
+<!--                            help="Albaranes destino"/>-->
                     <field name="sid_asignado" optional="show"
                            widget="many2one_avatar_user"
                            class="text-center"/>
