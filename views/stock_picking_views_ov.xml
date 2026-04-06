@@ -26,9 +26,8 @@
                     <attribute name="string">Mostrar nº de tubos</attribute>
                 </xpath>
                 <xpath expr="//field[@name='backorder_id']" position="before">
-                    <field name="qty_done_pct" nolabel="1" string="Resumen"
-                           style="vertical-align:middle;background-color:grey;font-size:15px;color:yellow;"/>
-                </xpath>
+                    <field name="qty_done_pct" nolabel="1" string="        " widget="percentpie" style="vertical-align:middle;width:60px;margin-top:10px;margin-right:0px;" />
+                    <field name="sid_scope_summary" optional="show" nolabel="1"  string="Resumen" style="vertical-align:middle;background-color:grey;font-size:15px;color:yellow;"/>
                 <xpath expr="//field[@name='qty_done_pct']" position="before">
                     <field name="sid_completado" string="Completado: "/>
                 </xpath>
@@ -43,14 +42,18 @@
                     <attribute name="decoration-it">state == 'done'</attribute>
                 </xpath>
 
-                <xpath expr="//notebook[1]//page[2]//tree[1]//field[@name='product_id']" position="after">
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']" position="after">
                     <field name='family' optional="show" class="text-center"/>
                 </xpath>
-                <xpath expr="//sheet[1]" position="attributes">
-                    <attribute name="style">min-width: 100%;</attribute>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']" position="before">
+                    <xpath expr="//button[@name='action_show_details']" position="move"/>
+                    <field name='todo' optional="show"/>
                 </xpath>
                 <xpath expr="//notebook[1]//page[2]//tree[1]//field[@name='item']" position="attributes">
                     <attribute name="style">background-color:grey;text-align:center;color:white;</attribute>
+                </xpath>
+                <xpath expr="//sheet[1]" position="attributes">
+                    <attribute name="style">min-width: 100%;</attribute>
                 </xpath>
                 <xpath expr="//notebook[1]//page[2]//tree[1]//field[@name='comments']" position="attributes">
                     <attribute name="style">background-color:grey;text-align:center;color:yellow;</attribute>
