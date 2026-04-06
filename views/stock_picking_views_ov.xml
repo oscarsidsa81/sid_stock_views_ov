@@ -83,140 +83,87 @@
 
         <!-- Stock Picking: Tree -->
         <record id="view_stock_picking_tree_madrid_delivery_return" model="ir.ui.view">
-    <field name="name">stock.picking.tree.madrid.delivery.return</field>
-    <field name="model">stock.picking</field>
-    <field name="type">tree</field>
-    <field name="arch" type="xml">
-        <tree string="Picking list" js_class="lazy_column_list" multi_edit="1" sample="1" expand="1" default_order="scheduled_date asc, priority desc, name asc" delete="false">
-            <field name="priority" optional="show" widget="priority" nolabel="1"/>
-            <field name="qty_done_pct" optional="show" widget="percentpie" nolabel="1" string="        " class="text-center"/>
-            <field name="sid_scope_summary" optional="show" class="text-center"/>
-            <field name="sid_enviar" optional="show" string="Enviar" class="text-center" widget="boolean_toggle"/>
-            <field name="sid_completado" optional="show" string="Comp." class="text-center" widget="boolean_toggle"/>
-            <field name="sid_asignado" optional="show" widget="many2one_avatar_user" class="text-center"/>
+            <field name="name">stock.picking.tree.madrid.delivery.return</field>
+            <field name="model">stock.picking</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Picking list"
+                      multi_edit="1"
+                      expand="1"
+                      default_order="scheduled_date asc, priority desc, name asc"
+                      delete="0">
+                    <field name="priority" optional="show" widget="priority" nolabel="1"/>
+                    <field name="qty_done_pct" optional="show" widget="percentpie" nolabel="1" string="        "
+                           width="40px"
+                           class="text-center"
+                           style="vertical-align:middle;width:60px;margin-top:10px;margin-right:0px;"/>
+                    <field name="sid_scope_summary" optional="show" class="text-center"/>
+                    <field name="sid_enviar" optional="show" string="Enviar" width="5px" class="text-center"
+                           widget="boolean_toggle"/>
+                    <field name="sid_completado" optional="show" string="Comp." width="5px" class="text-center"
+                           widget="boolean_toggle"/>
+                    <button class="oe_inline" icon="fa-reply"
+                            name="%(sid_stock_views_ov.sid_act_server_picking_origen)d"
+                            type="action"
+                            help="Albaranes origen"/>
+                    <button class="oe_inline" icon="fa-share"
+                            name="%(sid_stock_views_ov.sid_act_server_picking_destino)d"
+                            type="action"
+                            help="Albaranes destino"/>
+                    <field name="sid_asignado" optional="show"
+                           widget="many2one_avatar_user"
+                           class="text-center"/>
 
-            <field name="group_id" string="Pedido" optional="show" class="text-center" decoration-bf="1"/>
-            <field name="name" decoration-bf="1"/>
-            <field name="location_id" options="{'no_create': True}" string="From" groups="stock.group_stock_multi_locations" optional="hide"/>
-            <field name="location_dest_id" options="{'no_create': True}" string="To" groups="stock.group_stock_multi_locations" optional="hide"/>
-            <field name="partner_id" string="Dirección" optional="show"/>
-            <field name="sid_cliente" string="Cliente" optional="show"/>
-            <field name="is_signed" string="Signed" optional="hide" groups="stock.group_stock_sign_delivery"/>
-            <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
-            <field name="scheduled_date" optional="show" class="text-center" widget="remaining_days"
-                   attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
-            <field name="activity_ids" widget="list_activity"/>
-            <field name="activity_user_id" optional="show" string="Usuario" widget="many2one_avatar"/>
-            <field name="my_activity_date_deadline" string="Deadline" widget="remaining_days" options="{'allow_order': '1'}"/>
-            <field name="picking_type_code" invisible="1"/>
-            <field name="products_availability_state" invisible="1" options="{'lazy': true}"/>
-            <field name="products_availability" options="{'lazy': true}" optional="hide"
-                   attrs="{'invisible': ['|', ('picking_type_code', '!=', 'outgoing'), ('state', 'not in', ['confirmed', 'waiting', 'assigned'])]}"
-                   decoration-success="state == 'assigned' or products_availability_state == 'available'"
-                   decoration-warning="state != 'assigned' and products_availability_state in ('expected', 'available')"
-                   decoration-danger="state != 'assigned' and products_availability_state == 'late'"/>
-            <field name="date_deadline" optional="hide" widget="remaining_days"
-                   attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
-            <field name="date_done" string="Effective Date" optional="hide"/>
-            <field name="origin" optional="show" readonly="1"/>
-            <field name="carrier_id" optional="show" string="Transportista"/>
-            <field name="weight" optional="show" class="text-center"/>
-            <field name="shipping_weight" optional="show" class="text-center"/>
-            <field name="backorder_id" optional="show"/>
-            <field name="picking_type_id" optional="hide"/>
-            <field name="company_id" groups="base.group_multi_company" optional="hide"/>
-            <field name="state" optional="show" widget="badge"
-                   decoration-success="state == 'done'"
-                   decoration-info="state not in ('done', 'cancel', 'draft')"
-                   decoration-muted="state == 'draft'"/>
-            <field name="activity_exception_decoration" widget="activity_exception"/>
-            <field name="json_popover" nolabel="1" widget="stock_rescheduling_popover"
-                   attrs="{'invisible': [('json_popover', '=', False)]}"/>
-        </tree>
-    </field>
-</record>
-<!--        <record id="view_stock_picking_tree_madrid_delivery_return" model="ir.ui.view">-->
-<!--            <field name="name">stock.picking.tree.madrid.delivery.return</field>-->
-<!--            <field name="model">stock.picking</field>-->
-<!--            <field name="type">tree</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <tree string="Picking list"-->
-<!--                      multi_edit="1"-->
-<!--                      expand="1"-->
-<!--                      default_order="scheduled_date asc, priority desc, name asc"-->
-<!--                      delete="0">-->
-<!--                    <field name="priority" optional="show" widget="priority" nolabel="1"/>-->
-<!--                    <field name="qty_done_pct" optional="show" widget="percentpie" nolabel="1" string="        "-->
-<!--                           width="40px"-->
-<!--                           class="text-center"-->
-<!--                           style="vertical-align:middle;width:60px;margin-top:10px;margin-right:0px;"/>-->
-<!--                    <field name="sid_scope_summary" optional="show" class="text-center"/>-->
-<!--                    <field name="sid_enviar" optional="show" string="Enviar" width="5px" class="text-center"-->
-<!--                           widget="boolean_toggle"/>-->
-<!--                    <field name="sid_completado" optional="show" string="Comp." width="5px" class="text-center"-->
-<!--                           widget="boolean_toggle"/>-->
-<!--                    <button class="oe_inline" icon="fa-reply"-->
-<!--                            name="%(sid_stock_views_ov.sid_act_server_picking_origen)d"-->
-<!--                            type="action"-->
-<!--                            help="Albaranes origen"/>-->
-<!--                    <button class="oe_inline" icon="fa-share"-->
-<!--                            name="%(sid_stock_views_ov.sid_act_server_picking_destino)d"-->
-<!--                            type="action"-->
-<!--                            help="Albaranes destino"/>-->
-<!--                    <field name="sid_asignado" optional="show"-->
-<!--                           widget="many2one_avatar_user"-->
-<!--                           class="text-center"/>-->
+                    <field name="group_id" string="Pedido" optional="show" class="text-center" decoration-bf="1"/>
+                    <field name="name" decoration-bf="1"/>
+                    <field name="location_id" options="{'no_create': True}" string="From"
+                           groups="stock.group_stock_multi_locations" optional="hide"/>
+                    <field name="location_dest_id" options="{'no_create': True}" string="To"
+                           groups="stock.group_stock_multi_locations" optional="hide"/>
+                    <field name="partner_id" string="Dirección" optional="show"/>
+                    <field name="sid_cliente" string="Cliente" optional="show"/>
 
-<!--                    <field name="group_id" string="Pedido" optional="show" class="text-center" decoration-bf="1"/>-->
-<!--                    <field name="name" decoration-bf="1"/>-->
-<!--                    <field name="location_id" options="{'no_create': True}" string="From"-->
-<!--                           groups="stock.group_stock_multi_locations" optional="hide"/>-->
-<!--                    <field name="location_dest_id" options="{'no_create': True}" string="To"-->
-<!--                           groups="stock.group_stock_multi_locations" optional="hide"/>-->
-<!--                    <field name="partner_id" string="Dirección" optional="show"/>-->
-<!--                    <field name="sid_cliente" string="Cliente" optional="show"/>-->
+                    <field name="is_signed" string="Signed" optional="hide" groups="stock.group_stock_sign_delivery"/>
+                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
 
-<!--                    <field name="is_signed" string="Signed" optional="hide" groups="stock.group_stock_sign_delivery"/>-->
-<!--                    <field name="user_id" optional="hide" widget="many2one_avatar_user"/>-->
+                    <field name="scheduled_date" optional="show" width="30px" class="text-center"
+                           widget="remaining_days"
+                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <field name="activity_ids" widget="list_activity"/>
+                    <field name="activity_user_id" optional="show" string="Usuario" widget="many2one_avatar_user"/>
+                    <field name="my_activity_date_deadline" string="Deadline" widget="remaining_days"
+                           options="{'allow_order': '1'}"/>
 
-<!--                    <field name="scheduled_date" optional="show" width="30px" class="text-center"-->
-<!--                           widget="remaining_days"-->
-<!--                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>-->
-<!--                    <field name="activity_ids" widget="list_activity"/>-->
-<!--                    <field name="activity_user_id" optional="show" string="Usuario" widget="many2one_avatar_user"/>-->
-<!--                    <field name="my_activity_date_deadline" string="Deadline" widget="remaining_days"-->
-<!--                           options="{'allow_order': '1'}"/>-->
+                    <field name="picking_type_code" invisible="1"/>
+                    <field name="products_availability_state" invisible="1" options="{'lazy': true}"/>
+                    <field name="products_availability" options="{'lazy': true}" optional="hide"
+                           attrs="{'invisible': ['|', ('picking_type_code', '!=', 'outgoing'), ('state', 'not in', ['confirmed', 'waiting', 'assigned'])]}"
+                           decoration-success="state == 'assigned' or products_availability_state == 'available'"
+                           decoration-warning="state != 'assigned' and products_availability_state in ('expected', 'available')"
+                           decoration-danger="state != 'assigned' and products_availability_state == 'late'"/>
 
-<!--                    <field name="picking_type_code" invisible="1"/>-->
-<!--                    <field name="products_availability_state" invisible="1" options="{'lazy': true}"/>-->
-<!--                    <field name="products_availability" options="{'lazy': true}" optional="hide"-->
-<!--                           attrs="{'invisible': ['|', ('picking_type_code', '!=', 'outgoing'), ('state', 'not in', ['confirmed', 'waiting', 'assigned'])]}"-->
-<!--                           decoration-success="state == 'assigned' or products_availability_state == 'available'"-->
-<!--                           decoration-warning="state != 'assigned' and products_availability_state in ('expected', 'available')"-->
-<!--                           decoration-danger="state != 'assigned' and products_availability_state == 'late'"/>-->
+                    <field name="date_deadline" optional="hide" widget="remaining_days"
+                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
+                    <field name="date_done" string="Effective Date" optional="hide"/>
+                    <field name="origin" optional="show" readonly="1"/>
+                    <field name="carrier_id" optional="show" string="Transportista"/>
+                    <field name="weight" optional="show" class="text-center"/>
+                    <field name="shipping_weight" optional="show" class="text-center"/>
+                    <field name="backorder_id" optional="show"/>
+                    <field name="picking_type_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
 
-<!--                    <field name="date_deadline" optional="hide" widget="remaining_days"-->
-<!--                           attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>-->
-<!--                    <field name="date_done" string="Effective Date" optional="hide"/>-->
-<!--                    <field name="origin" optional="show" readonly="1"/>-->
-<!--                    <field name="carrier_id" optional="show" string="Transportista"/>-->
-<!--                    <field name="weight" optional="show" class="text-center"/>-->
-<!--                    <field name="shipping_weight" optional="show" class="text-center"/>-->
-<!--                    <field name="backorder_id" optional="show"/>-->
-<!--                    <field name="picking_type_id" optional="hide"/>-->
-<!--                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>-->
+                    <field name="state" optional="show" widget="badge"
+                           decoration-success="state == 'done'"
+                           decoration-info="state not in ('done', 'cancel', 'draft')"
+                           decoration-muted="state == 'draft'"/>
 
-<!--                    <field name="state" optional="show" widget="badge"-->
-<!--                           decoration-success="state == 'done'"-->
-<!--                           decoration-info="state not in ('done', 'cancel', 'draft')"-->
-<!--                           decoration-muted="state == 'draft'"/>-->
-
-<!--                    <field name="activity_exception_decoration" widget="activity_exception"/>-->
-<!--                    <field name="json_popover" nolabel="1" widget="stock_rescheduling_popover"-->
-<!--                           attrs="{'invisible': [('json_popover', '=', False)]}"/>-->
-<!--                </tree>-->
-<!--            </field>-->
-<!--        </record>-->
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                    <field name="json_popover" nolabel="1" widget="stock_rescheduling_popover"
+                           attrs="{'invisible': [('json_popover', '=', False)]}"/>
+                </tree>
+            </field>
+        </record>
 
         <!--        VISTA BASE DE STOCK MOVES      -->
 
