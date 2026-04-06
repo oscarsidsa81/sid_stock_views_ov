@@ -83,8 +83,6 @@
 
         <!-- Stock Picking: Tree -->
         <record id="view_stock_picking_tree_madrid_delivery_return" model="ir.ui.view">
-            <field name="name">stock.picking.tree.madrid.delivery.return</field>
-        <record id="view_stock_picking_tree_madrid_delivery_return" model="ir.ui.view">
     <field name="name">stock.picking.tree.madrid.delivery.return</field>
     <field name="model">stock.picking</field>
     <field name="type">tree</field>
@@ -137,6 +135,8 @@
         </tree>
     </field>
 </record>
+<!--        <record id="view_stock_picking_tree_madrid_delivery_return" model="ir.ui.view">-->
+<!--            <field name="name">stock.picking.tree.madrid.delivery.return</field>-->
 <!--            <field name="model">stock.picking</field>-->
 <!--            <field name="type">tree</field>-->
 <!--            <field name="arch" type="xml">-->
