@@ -104,14 +104,14 @@
                            widget="boolean_toggle"/>
                     <button class="oe_inline" icon="fa-reply"
                             name="%(sid_stock_views_ov.sid_act_server_picking_origen)d"
-                            type="action"
+                            type="object"
                             help="Albaranes origen"/>
                     <button class="oe_inline" icon="fa-share"
                             name="%(sid_stock_views_ov.sid_act_server_picking_destino)d"
-                            type="action"
+                            type="object"
                             help="Albaranes destino"/>
                     <field name="sid_asignado" optional="show"
-                           widget="many2one_avatar"
+                           widget="many2one_avatar_user"
                            class="text-center"/>
 
                     <field name="group_id" string="Pedido" optional="show" class="text-center" decoration-bf="1"/>
@@ -130,7 +130,7 @@
                            widget="remaining_days"
                            attrs="{'invisible':[('state', 'in', ('done', 'cancel'))]}"/>
                     <field name="activity_ids" widget="list_activity"/>
-                    <field name="activity_user_id" optional="show" string="Usuario" widget="many2one_avatar"/>
+                    <field name="activity_user_id" optional="show" string="Usuario" widget="many2one_avatar_user"/>
                     <field name="my_activity_date_deadline" string="Deadline" widget="remaining_days"
                            options="{'allow_order': '1'}"/>
 
