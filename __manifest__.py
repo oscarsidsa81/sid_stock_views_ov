@@ -10,6 +10,7 @@
         'stock',
         'sid_stock_actions_ov',
         'sid_stock_base',
+        'oct_customize_reports',
 
     ],
     'data': [
