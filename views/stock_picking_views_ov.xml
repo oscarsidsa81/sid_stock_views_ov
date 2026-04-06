@@ -177,8 +177,6 @@
                     <field name="date" groups="base.group_no_one"/>
                     <field name="reference"/>
                     <field name="group_id" optional="show" string="Pedido" readonly="1"/>
-                    <field name="tag_id" widget="many2many_tags" readonly="0"
-                           string="Actividades" options="{'color_field': 'color'}"/>
                     <field name="todo" string="Act" widget="boolean_toggle" optional="show"/>
                     <field name="item" readonly="1"/>
                     <field name="family" readonly="1"/>
