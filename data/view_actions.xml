@@ -133,7 +133,6 @@
             <!-- Opcional: límite -->
             <field name="limit">80</field>
         </record>
-view_stock_picking_tree_certificates
 
         <!-- Menú padre: Asignación (hijo de stock.menu_stock_root) -->
         <menuitem id="menu_asignacion_root"
@@ -145,7 +144,7 @@ view_stock_picking_tree_certificates
         <menuitem id="menu_madrid_picking_asignacion_por_linea"
                   name="Madrid: Picking / Asignación por línea"
                   parent="menu_asignacion_root"
-                  action=""
+                  action="action_stock_picking_madrid_asignacion_linea"
                   sequence="10"/>
 
         <menuitem id="menu_madrid_picking_y_recepciones"
@@ -169,7 +168,7 @@ view_stock_picking_tree_certificates
         <menuitem id="menu_certificados"
                   name="Certificados"
                   parent="menu_asignacion_root"
-                  action=""
+                  action="action_stock_picking_certificates"
                   sequence="50"/>
 
         <menuitem id="dev_and_err"
