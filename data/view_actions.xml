@@ -138,7 +138,7 @@
         <menuitem id="menu_asignacion_root"
                   name="Asignación"
                   parent="stock.menu_stock_root"
-                  sequence="10"/>
+                  sequence="1"/>
 
         <!-- 5 hijos como en la imagen (aún sin acciones) -->
         <menuitem id="menu_madrid_picking_asignacion_por_linea"

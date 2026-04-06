@@ -260,6 +260,12 @@
                 <xpath expr="//filter[@name='status']" position="before">
                     <filter name="sid_grupo_abastecimiento" string="Pedido - Grupo" context="{'group_by': 'group_id'}"/>
                 </xpath>
+                <search>
+                    <searchpanel>
+                        <field name="carrier_id" enable_counters="1" select="multi"/>
+                        <field name="partner_id" enable_counters="1" select="multi"/>
+                    </searchpanel>
+                </search>
             </field>
         </record>
 
