@@ -101,11 +101,9 @@
             <!-- Dominio -->
             <field name="domain" eval="[
                 ('state', 'in', ('waiting', 'confirmed', 'assigned')),
-                ('sale_id.team_id.id','=',ref('sales_team.team_sales_department_ptllno')),
-                ('picking_type_id', 'in', [
-                    ref('sid_stock_cfg.stock_picking_type__ptllo__outgoing__seq9__expediciones__c1'),
-                    ref('sid_stock_cfg.stock_picking_type__ptllo__incoming__seq10__devoluciones__c1'),
-                ])
+                '|',
+                ('is_certificate_picking', '=', True),
+                ('certificate_count', '>', 0)
             ]"/>
             <!-- Contexto (si quieres agrupar por estado como se ve en muchas listas) -->
             <field name="context">{'group_by': 'state'}</field>
