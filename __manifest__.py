@@ -8,7 +8,6 @@
     'author': 'SIDSA',
     'depends': [
         'stock',
-        'sid_stock_actions_ov',
         'sid_stock_base',
         'oct_customize_reports',
         'sid_stock_cfg',
