@@ -30,9 +30,13 @@ Incluye:
 Dependencias declaradas en el manifiesto:
 
 - `stock`
-- `sid_stock_actions_ov`
 - `sid_stock_base`
 - `oct_customize_reports`
+- `sid_stock_cfg`
+- `sales_team`
+- `delivery`
+
+> Este módulo ya no depende de `sid_stock_actions_ov`: las acciones servidor necesarias se incluyen en `data/server_actions.xml`.
 
 > Si alguna dependencia no está instalada, Odoo no permitirá instalar este módulo.
 
