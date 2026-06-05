@@ -34,7 +34,7 @@
                 ('state', 'in', ('waiting', 'confirmed', 'assigned')),
                 ('picking_type_id', 'in', [
                     ref('stock.picking_type_out'),
-                    ref('sid_stock_cfg.stock_picking_type__mad__incoming__seq8__returns__c1'),
+                    ref('sid_stock_cfg.stock_picking_type__mad__incoming__seq8__devoluciones__c1'),
                 ])
             ]"/>
             <!-- Contexto (si quieres agrupar por estado como se ve en muchas listas) -->
